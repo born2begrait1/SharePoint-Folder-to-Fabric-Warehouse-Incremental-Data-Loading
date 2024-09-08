@@ -1,0 +1,43 @@
+CREATE TABLE SharePointToFabric_SalesData
+(
+    OrderDate DATE,
+    Year INT,
+    Region VARCHAR(20),
+    SubCategory VARCHAR(30),
+    Product VARCHAR(40),
+    Price INT,
+    Units INT,
+    Sales INT
+);
+
+
+CREATE TABLE SharePointtoFabric_WaterMarkTable
+(
+    TableName VARCHAR(255),
+    WaterMarkValue DATE
+);
+
+SELECT * FROM SharePointToFabric_SalesData
+
+
+
+INSERT INTO SharePointtoFabric_WaterMarkTable (TableName, WaterMarkValue)
+VALUES ('SharePointToFabric_SalesData', '1753-01-01');
+
+
+CREATE PROCEDURE watermark_update @LastModifiedDate DATE, @TableName VARCHAR(50)
+AS
+BEGIN
+   
+    IF @LastModifiedDate > '1753-01-01'
+    BEGIN
+        UPDATE SharePointtoFabric_WaterMarkTable
+        SET WaterMarkValue = @LastModifiedDate
+        WHERE TableName = @TableName;
+    END
+    ELSE
+    BEGIN
+        
+        PRINT 'No new data found. Watermark not updated.';
+    END
+END;
