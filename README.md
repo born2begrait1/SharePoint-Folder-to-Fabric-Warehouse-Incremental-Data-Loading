@@ -1,0 +1,1 @@
+# SharePoint-Folder-to-Fabric-Warehouse-Incremental-Data-Loading
